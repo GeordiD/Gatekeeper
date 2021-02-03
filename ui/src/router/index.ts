@@ -1,10 +1,24 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
+import HomeView from '../views/HomeView.vue'
+import { _authStore } from '@/store/AuthStore'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Theta Gang Tracker - Login',
+    name: 'home',
+    component: HomeView,
+    beforeEnter: (to, from, next) => {
+      if(!_authStore.getState().code) {
+        next({name: 'login'});
+      } else {
+        next();
+      }
+    }
+  },
+  {
+    path: '/login',
+    name: 'login',
     component: LoginView
   }
   // ,
