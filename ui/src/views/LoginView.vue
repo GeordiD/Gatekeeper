@@ -7,6 +7,7 @@ import { Options, Vue } from 'vue-class-component';
 import { EnvConfig } from '@/models/EnvConfig';
 import { EnvConfigService } from '@/services/EnvConfigService';
 import { _authStore } from '@/store/AuthStore';
+import { AuthService } from '@/services/TDA/AuthService';
 
 export default class LoginView extends Vue {
 
@@ -14,7 +15,11 @@ export default class LoginView extends Vue {
 
   async beforeMount() {
     this.config = await new EnvConfigService().getConfig();
-
+    if(this.$route.redirectedFrom?.query.code) {
+      _authStore.setCode(this.$route.redirectedFrom.query.code as string);
+      await new AuthService().saveAccessToken();
+      this.$router.push('/');
+    }
   }
 
   onLoginClick() {

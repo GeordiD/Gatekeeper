@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
 import HomeView from '../views/HomeView.vue'
 import { _authStore } from '@/store/AuthStore'
@@ -9,7 +9,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'home',
     component: HomeView,
     beforeEnter: (to, from, next) => {
-      if(!_authStore.getState().code) {
+      if(!_authStore.getState().tokenResponse) {
         next({name: 'login'});
       } else {
         next();
@@ -33,7 +33,7 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes
 })
 
