@@ -7,7 +7,7 @@ export class AccountService extends TdaService {
   async getPositions(): Promise<Position[]> {
     var result = await axios.get("https://api.tdameritrade.com/v1/accounts", {
       params: { fields: "positions" },
-      headers: this.getDefaultHeaders(),
+      headers: await this.getDefaultHeaders(),
     });
 
     return result.data[0].securitiesAccount.positions;

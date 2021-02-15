@@ -42,4 +42,30 @@ export class AuthService {
 
         return false;
     }
+
+    async refreshToken(refreshToken: string) {
+        var config = await this._envConfigService.getConfig();
+        var client_id = config.tdClientKey;
+
+        var result = await axios.post(
+            `https://api.tdameritrade.com/v1/oauth2/token`,
+            qs.stringify({
+                grant_type: 'refresh_token',
+                refresh_token: refreshToken,
+                client_id: client_id
+            }),
+            {
+                headers: { 
+                  "content-type": "application/x-www-form-urlencoded"
+                }
+              }
+        )
+
+        if(result && result.data) {
+            console.log(result.data);
+            return result.data;
+        } else {
+            console.log("could not refresh token");
+        }
+    }
 }

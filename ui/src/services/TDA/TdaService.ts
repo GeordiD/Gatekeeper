@@ -1,11 +1,10 @@
 import { _authStore } from "@/store/AuthStore";
 
 export class TdaService {
-  protected getDefaultHeaders() {
-    return {
-      Authorization: `Bearer ${
-        _authStore.getState().tokenResponse!.access_token
-      }`,
-    };
-  }
+    protected async getDefaultHeaders() {
+        const accessToken = await _authStore.getAccessToken();
+        return {
+            Authorization: `Bearer ${accessToken}`,
+        };
+    }
 }

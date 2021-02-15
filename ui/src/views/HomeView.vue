@@ -21,11 +21,10 @@ import PositionListItem from "@/components/PositionListItem.vue";
         PositionListItem,
     },
 })
-export default class LoginView extends Vue {
+export default class HomeView extends Vue {
     positions: Position[] = [];
 
     async beforeMount() {
-        console.log(_authStore.getState().tokenResponse?.access_token);
         this.positions = await new AccountService().getPositions();
     }
 }
