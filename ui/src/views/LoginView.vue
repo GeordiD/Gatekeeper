@@ -16,6 +16,7 @@ export default class LoginView extends Vue {
   async beforeMount() {
     this.config = await new EnvConfigService().getConfig();
     if(this.$route.redirectedFrom?.query.code) {
+        console.log('hereeee');
       _authStore.setCode(this.$route.redirectedFrom.query.code as string);
       await new AuthService().saveAccessToken();
       this.$router.push('/');

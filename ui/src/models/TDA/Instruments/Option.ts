@@ -1,11 +1,8 @@
 import { AssetType } from "./AssetType";
+import { Instrument } from "./Instrument";
 import { OptionType } from "./OptionType";
 
-export interface Option {
-    assetType: AssetType;
-    cusip: string;
-    symbol: string;
-    description: string;
+export interface Option extends Instrument {
     // type: "'VANILLA' or 'BINARY' or 'BARRIER'";
     putCall: OptionType;
     underlyingSymbol: string;

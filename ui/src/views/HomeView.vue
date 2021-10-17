@@ -1,31 +1,23 @@
 <template>
-    <div>Home</div>
-    <div class="d-flex flex-column">
-        <PositionListItem
-            v-for="position in positions"
-            :key="position.instrument.cusip"
-            :position="position"
-        />
-    </div>
+    <h1>My Positions:</h1>
+    <Positions />
 </template>
 
 <script lang="ts">
 import { _authStore } from "@/store/AuthStore";
-import { AccountService } from "@/services/TDA/AccountService";
 import { Options, Vue } from "vue-class-component";
-import { Position } from "@/models/TDA/Position";
-import PositionListItem from "@/components/PositionListItem.vue";
+import Positions from "@/components/Positions.vue";
 
 @Options({
     components: {
-        PositionListItem,
+        Positions,
     },
 })
 export default class HomeView extends Vue {
-    positions: Position[] = [];
+    // positions: Position[] = [];
 
-    async beforeMount() {
-        this.positions = await new AccountService().getPositions();
-    }
+    // async beforeMount() {
+        
+    // }
 }
 </script>
