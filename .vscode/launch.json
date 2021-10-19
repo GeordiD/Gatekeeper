@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/ThetaGangTracker/bin/Debug/netcoreapp2.2/ThetaGangTracker.dll",
+            "program": "${workspaceFolder}/ThetaGangTracker/bin/Debug/netcoreapp3.1/ThetaGangTracker.dll",
             "args": [],
             "cwd": "${workspaceFolder}/ThetaGangTracker",
             "stopAtEntry": false,
