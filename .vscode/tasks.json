@@ -77,7 +77,12 @@
             "dependsOn": [
                 "docker-build: debug"
             ],
-            "dockerRun": {},
+            "dockerRun": {
+                "ports": [{
+                    "containerPort": 4040,
+                    "hostPort": 4040
+                }]
+            },
             "netCore": {
                 "appProject": "${workspaceFolder}/ThetaGangTracker/ThetaGangTracker.csproj",
                 "enableDebugging": true
