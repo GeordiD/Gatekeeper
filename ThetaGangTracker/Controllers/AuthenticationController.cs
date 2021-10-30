@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ThetaGangTracker.Models.ApiRequests;
 using ThetaGangTracker.Models;
 using ThetaGangTracker.Services;
+using System.Threading.Tasks;
 
 namespace ThetaGangTracker.Controllers
 {
@@ -11,17 +12,19 @@ namespace ThetaGangTracker.Controllers
     public class AuthenticationController : ControllerBase
     {
         private IJwtTokenService _jwtService;
+        private IAuthenticationService _authService;
 
-        public AuthenticationController(IJwtTokenService jwtService)
+        public AuthenticationController(IJwtTokenService jwtService, IAuthenticationService authService)
         {
             _jwtService = jwtService;
+            _authService = authService;
         }
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Login([FromBody] UserLoginRequest request)
+        public async Task<IActionResult> Login([FromBody] UserLoginRequest request)
         {
-            var user = CheckAuth(request);
+            var user = await _authService.AuthenticateUser(request);
 
             if (user == null)
                 return Unauthorized();
@@ -30,23 +33,6 @@ namespace ThetaGangTracker.Controllers
             {
                 token = _jwtService.GenerateJwt(user)
             });
-        }
-
-        // Very hard-coded version of authentication to test JWT setup. TBD
-        private User CheckAuth(UserLoginRequest request)
-        {
-            if (request.Username == "GeordiD" && request.Password == "tacos")
-            {
-                return new User()
-                {
-                    Id = 420,
-                    Username = "GeordiD",
-                    Password = "not today satan",
-                    Email = "geordi.dosher@gmail.com"
-                };
-            }
-
-            return null;
         }
     }
 }

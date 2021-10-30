@@ -41,9 +41,7 @@
         {
             "type": "docker-build",
             "label": "docker-build: debug",
-            "dependsOn": [
-                "build"
-            ],
+            "dependsOn": ["build"],
             "dockerBuild": {
                 "tag": "thetagangtracker:dev",
                 "target": "base",
@@ -58,9 +56,7 @@
         {
             "type": "docker-build",
             "label": "docker-build: release",
-            "dependsOn": [
-                "build"
-            ],
+            "dependsOn": ["build"],
             "dockerBuild": {
                 "tag": "thetagangtracker:latest",
                 "dockerfile": "${workspaceFolder}/ThetaGangTracker/Dockerfile",
@@ -74,14 +70,15 @@
         {
             "type": "docker-run",
             "label": "docker-run: debug",
-            "dependsOn": [
-                "docker-build: debug"
-            ],
+            "dependsOn": ["docker-build: debug"],
             "dockerRun": {
-                "ports": [{
-                    "containerPort": 4040,
-                    "hostPort": 4040
-                }]
+                "ports": [
+                    {
+                        "containerPort": 4040,
+                        "hostPort": 4040
+                    }
+                ],
+                "network": "thetagangtracker_backend"
             },
             "netCore": {
                 "appProject": "${workspaceFolder}/ThetaGangTracker/ThetaGangTracker.csproj",
@@ -91,9 +88,7 @@
         {
             "type": "docker-run",
             "label": "docker-run: release",
-            "dependsOn": [
-                "docker-build: release"
-            ],
+            "dependsOn": ["docker-build: release"],
             "dockerRun": {},
             "netCore": {
                 "appProject": "${workspaceFolder}/ThetaGangTracker/ThetaGangTracker.csproj"

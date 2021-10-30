@@ -14,7 +14,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ThetaGangTracker.Repos;
 using ThetaGangTracker.Services;
+using ThetaGangTracker.Utilities;
 
 namespace ThetaGangTracker
 {
@@ -76,7 +78,15 @@ namespace ThetaGangTracker
                     };
                 });
 
+            // Services
             services.AddSingleton<IJwtTokenService, JwtTokenService>();
+            services.AddSingleton<IAuthenticationService, AuthenticationService>();
+
+            // Repos
+            services.AddSingleton<ILoginRepo, LoginRepo>();
+
+            // Utilities
+            services.AddSingleton<IDbClient, DbClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
