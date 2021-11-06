@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using ThetaGangTracker.Utilities;
 
 namespace ThetaGangTracker.Repos
@@ -11,6 +8,7 @@ namespace ThetaGangTracker.Repos
     {
         Task CreateLogin(string username, string password);
         Task<bool> CheckLogin(string username, string password);
+        Task<bool> UsernameExists(string username);
     }
 
     public class LoginRepo : ILoginRepo
@@ -36,11 +34,21 @@ namespace ThetaGangTracker.Repos
                 SELECT password = crypt(@password, password)
                 FROM login
                 WHERE username = @username
-                
             ", new { username, password });
 
             return result.Any() &&
                 bool.Parse(result.FirstOrDefault());
+        }
+
+        public async Task<bool> UsernameExists(string username)
+        {
+            var result = await _db.QueryAsync<string>(@"
+                SELECT username
+                FROM login
+                WHERE username = @username
+            ", new { username });
+
+            return result.Any();
         }
     }
 }

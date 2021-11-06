@@ -1,4 +1,4 @@
-namespace ThetaGangTracker.Models.ApiRequests
+namespace ThetaGangTracker.Models.Api.Requests
 {
     public class UserLoginRequest
     {

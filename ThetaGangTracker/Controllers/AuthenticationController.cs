@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ThetaGangTracker.Models.ApiRequests;
-using ThetaGangTracker.Models;
 using ThetaGangTracker.Services;
 using System.Threading.Tasks;
+using ThetaGangTracker.Models.Api.Requests;
+using ThetaGangTracker.Models.Api.Responses;
 
 namespace ThetaGangTracker.Controllers
 {
@@ -24,15 +24,35 @@ namespace ThetaGangTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] UserLoginRequest request)
         {
-            var user = await _authService.AuthenticateUser(request);
+            var loginResponse = await _authService.AuthenticateUser(request);
 
-            if (user == null)
+            if (loginResponse == null)
                 return Unauthorized();
 
             return Ok(new
             {
-                token = _jwtService.GenerateJwt(user)
+                token = _jwtService.GenerateJwt()
             });
+        }
+
+        [AllowAnonymous]
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateLogin(CreateLoginRequest request)
+        {
+            var response = await _authService.TryCreateLogin(request.Username, request.Password);
+
+            if (response.Success)
+            {
+                return Ok(new LoginResponse()
+                {
+                    Id = 666, // TODO
+                    Username = request.Username
+                });
+            }
+            else
+            {
+                return BadRequest(response);
+            }
         }
     }
 }

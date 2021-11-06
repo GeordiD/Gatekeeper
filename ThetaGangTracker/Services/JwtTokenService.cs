@@ -12,7 +12,7 @@ namespace ThetaGangTracker.Services
 {
     public interface IJwtTokenService
     {
-        string GenerateJwt(User user);
+        string GenerateJwt();
     }
 
     public class JwtTokenService : IJwtTokenService
@@ -24,7 +24,7 @@ namespace ThetaGangTracker.Services
             _config = config;
         }
 
-        public string GenerateJwt(User user)
+        public string GenerateJwt()
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);

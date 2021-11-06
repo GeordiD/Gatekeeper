@@ -17,6 +17,7 @@ using Microsoft.OpenApi.Models;
 using ThetaGangTracker.Repos;
 using ThetaGangTracker.Services;
 using ThetaGangTracker.Utilities;
+using ThetaGangTracker.Utilities.Config;
 
 namespace ThetaGangTracker
 {
@@ -77,6 +78,9 @@ namespace ThetaGangTracker
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                     };
                 });
+
+            // Configs
+            services.AddSingleton<IAuthConfig, AuthConfig>();
 
             // Services
             services.AddSingleton<IJwtTokenService, JwtTokenService>();

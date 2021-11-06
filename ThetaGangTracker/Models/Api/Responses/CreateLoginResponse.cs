@@ -1,6 +1,6 @@
-namespace ThetaGangTracker.Models
+namespace ThetaGangTracker.Models.Api.Responses
 {
-    public class User
+    public class LoginResponse
     {
         public int Id { get; set; }
         public string Username { get; set; }
