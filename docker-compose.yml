@@ -3,11 +3,11 @@
 version: "3.4"
 
 services:
-    thetagangtracker:
-        image: thetagangtracker
+    gatekeeper:
+        image: gatekeeper
         build:
             context: .
-            dockerfile: ThetaGangTracker/Dockerfile
+            dockerfile: Gatekeeper/Dockerfile
         ports:
             - 4040:4040
         networks:

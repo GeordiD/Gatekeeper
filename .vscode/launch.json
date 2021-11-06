@@ -6,7 +6,7 @@
             "request": "launch",
             "preLaunchTask": "docker-run: debug",
             "netCore": {
-                "appProject": "${workspaceFolder}/ThetaGangTracker/ThetaGangTracker.csproj"
+                "appProject": "${workspaceFolder}/Gatekeeper/Gatekeeper.csproj"
             },
             "launchBrowser": {
                 "enabled": false
