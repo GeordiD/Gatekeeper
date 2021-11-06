@@ -1,3 +1,3 @@
 # Gatekeeper
 
-Authentication Microservice built on C# and Docker.
+Authentication Microservice built on C#, Postgres, and Docker.
