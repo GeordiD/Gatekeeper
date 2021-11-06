@@ -1,0 +1,35 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP .NET Core service.
+
+version: "3.4"
+
+services:
+    gatekeeper:
+        image: gatekeeper
+        build:
+            context: .
+            dockerfile: Gatekeeper/Dockerfile
+        ports:
+            - 4040:4040
+        networks:
+            - backend
+    postgres:
+        image: postgres
+        restart: always
+        container_name: pgdb
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+        logging:
+            options:
+                max-size: 10m
+                max-file: "3"
+        ports:
+            - 5432:5432
+        volumes:
+            - ./postgres-data:/var/lib/postgresql/data
+            - ./sql:/scripts
+        networks:
+            - backend
+
+networks:
+    backend:

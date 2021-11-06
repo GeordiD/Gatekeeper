@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/ThetaGangTracker/ThetaGangTracker.csproj",
+                "${workspaceFolder}/Gatekeeper/Gatekeeper.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/ThetaGangTracker/ThetaGangTracker.csproj",
+                "${workspaceFolder}/Gatekeeper/Gatekeeper.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -32,11 +32,67 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/ThetaGangTracker/ThetaGangTracker.csproj",
+                "${workspaceFolder}/Gatekeeper/Gatekeeper.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "type": "docker-build",
+            "label": "docker-build: debug",
+            "dependsOn": ["build"],
+            "dockerBuild": {
+                "tag": "gatekeeper:dev",
+                "target": "base",
+                "dockerfile": "${workspaceFolder}/Gatekeeper/Dockerfile",
+                "context": "${workspaceFolder}",
+                "pull": true
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/Gatekeeper/Gatekeeper.csproj"
+            }
+        },
+        {
+            "type": "docker-build",
+            "label": "docker-build: release",
+            "dependsOn": ["build"],
+            "dockerBuild": {
+                "tag": "gatekeeper:latest",
+                "dockerfile": "${workspaceFolder}/Gatekeeper/Dockerfile",
+                "context": "${workspaceFolder}",
+                "pull": true
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/Gatekeeper/Gatekeeper.csproj"
+            }
+        },
+        {
+            "type": "docker-run",
+            "label": "docker-run: debug",
+            "dependsOn": ["docker-build: debug"],
+            "dockerRun": {
+                "ports": [
+                    {
+                        "containerPort": 4040,
+                        "hostPort": 4040
+                    }
+                ],
+                "network": "gatekeeper_backend"
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/Gatekeeper/Gatekeeper.csproj",
+                "enableDebugging": true
+            }
+        },
+        {
+            "type": "docker-run",
+            "label": "docker-run: release",
+            "dependsOn": ["docker-build: release"],
+            "dockerRun": {},
+            "netCore": {
+                "appProject": "${workspaceFolder}/Gatekeeper/Gatekeeper.csproj"
+            }
         }
     ]
 }
