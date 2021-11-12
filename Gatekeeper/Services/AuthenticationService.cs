@@ -71,9 +71,12 @@ namespace Gatekeeper.Services
             {
                 MeetsMinLength = password.Length > 0
                     && password.Length >= _authConfig.Password.MinLength,
-                HasNumber = password.Any(char.IsDigit),
-                HasUppercase = password.Any(char.IsUpper),
-                HasSymbol = !password.All(char.IsLetterOrDigit)
+                HasNumber = _authConfig.Password.RequireNumber ?
+                    password.Any(char.IsDigit) : null,
+                HasUppercase = _authConfig.Password.RequireUppercase ?
+                    password.Any(char.IsUpper) : null,
+                HasSymbol = _authConfig.Password.RequireSymbol ?
+                    !password.All(char.IsLetterOrDigit) : null
             };
         }
     }

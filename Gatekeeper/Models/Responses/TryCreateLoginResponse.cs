@@ -37,13 +37,16 @@ namespace Gatekeeper.Models.Responses.Authentication
         {
             get
             {
-                return MeetsMinLength && HasNumber && HasSymbol && HasUppercase;
+                return MeetsMinLength &&
+                    (HasNumber ?? true) &&
+                    (HasSymbol ?? true) &&
+                    (HasUppercase ?? true);
             }
         }
 
         public bool MeetsMinLength { get; set; }
-        public bool HasNumber { get; set; }
-        public bool HasUppercase { get; set; }
-        public bool HasSymbol { get; set; }
+        public bool? HasNumber { get; set; }
+        public bool? HasUppercase { get; set; }
+        public bool? HasSymbol { get; set; }
     }
 }

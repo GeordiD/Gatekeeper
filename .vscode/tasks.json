@@ -39,6 +39,19 @@
             "problemMatcher": "$msCompile"
         },
         {
+            "label": "test watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "test",
+                "/p:CollectCoverage=true",
+                "/p:CoverletOutputFormat=lcov",
+                "/p:CoverletOutput=./lcov.info"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
             "type": "docker-build",
             "label": "docker-build: debug",
             "dependsOn": ["build"],
