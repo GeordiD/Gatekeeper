@@ -45,7 +45,6 @@ namespace Gatekeeper.Controllers
             {
                 return Ok(new LoginResponse()
                 {
-                    Id = 666, // TODO
                     Username = request.Username
                 });
             }

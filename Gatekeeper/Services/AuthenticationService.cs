@@ -31,7 +31,6 @@ namespace Gatekeeper.Services
             {
                 return new LoginResponse()
                 {
-                    Id = 420, //TODO
                     Username = request.Username,
                 };
             }
